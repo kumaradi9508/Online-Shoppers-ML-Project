@@ -115,3 +115,145 @@ print("\nCleaned dataset saved successfully.")
 cleaning_summary = pd.DataFrame({"Description": ["Original rows","Rows after cleaning","Duplicate rows removed","Missing values after cleaning"],"Value": [len(df),len(df_clean),len(df) - len(df_clean),df_clean.isnull().sum().sum()]})
 cleaning_summary.to_csv(r"E:\Online-Shoppers-ML-Project\output\results\cleaning_summary.csv",index=False)
 print("\nDay 2 data cleaning completed.")
+
+
+# ============================================================
+# DAY 3: EXPLORATORY DATA ANALYSIS (EDA)
+# ============================================================
+
+# Step 24: Load the cleaned dataset
+df_clean = pd.read_csv(r"E:\Online-Shoppers-ML-Project\data\online_shoppers_intention_cleaned.csv")
+print(df_clean)
+
+print("\nCleaned dataset shape:")
+print(df_clean.shape)
+
+# Step 25: Purchase and non-purchase analysis
+print("\nOBJECTIVE 1: PURCHASE ANALYSIS")
+purchase_count = df_clean["Revenue"].value_counts()
+print("\nPurchase counts:")
+print(purchase_count)
+
+purchase_percentage = df_clean["Revenue"].value_counts(normalize=True) * 100
+print("\nPurchase percentages:")
+print(purchase_percentage)
+
+purchase_count.to_csv(r"E:\Online-Shoppers-ML-Project\output\results\purchase_analysis.csv")
+
+plt.figure(figsize=(7, 5))
+sns.countplot(data=df_clean, x="Revenue", hue='Revenue', palette={False: "#3B82F6", True: "#F97316"},legend=False)
+plt.title("Purchase vs Non-Purchase Sessions")
+plt.xlabel("Purchase Made")
+plt.ylabel("Number of Sessions")
+plt.tight_layout()
+plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\purchase_analysis.png")
+plt.show()
+
+
+# Step 26: Purchase rate by visitor type
+print("\nOBJECTIVE 2: VISITOR TYPE ANALYSIS")
+
+visitor_purchase = df_clean.groupby("VisitorType")["Revenue"].mean() * 100
+print("\nPurchase rate by visitor type (%):")
+print(visitor_purchase)
+
+visitor_purchase.to_csv(r"E:\Online-Shoppers-ML-Project\output\results\visitor_purchase_rate.csv")
+
+plt.figure(figsize=(8, 5))
+sns.barplot(x=visitor_purchase.index, y=visitor_purchase.values, hue=visitor_purchase.index, palette=["#005F73", "#0A9396", "#94D2BD"], legend=False)
+plt.title("Purchase Rate by Visitor Type")
+plt.xlabel("Visitor Type")
+plt.ylabel("Purchase Rate (%)")
+plt.xticks(rotation=15)
+plt.tight_layout()
+plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\visitor_purchase_rate.png")
+plt.show()
+
+# Step 27: Browsing duration analysis
+print("\nOBJECTIVE 3: BROWSING DURATION ANALYSIS")
+
+duration_analysis = df_clean.groupby("Revenue")[["Administrative_Duration","Informational_Duration","ProductRelated_Duration"]].mean()
+print("\nAverage browsing duration:")
+print(duration_analysis)
+
+duration_analysis.to_csv(r"E:\Online-Shoppers-ML-Project\output\results\duration_analysis.csv")
+
+plt.figure(figsize=(8, 5))
+sns.boxplot(data=df_clean,x="Revenue",y="ProductRelated_Duration",hue="Revenue",palette={False: "#8B5CF6", True: "#14B8A6"},legend=False)
+plt.title("Product Page Duration by Purchase Outcome")
+plt.xlabel("Purchase Made")
+plt.ylabel("Product-Related Duration (seconds)")
+plt.xticks([0, 1], ["No Purchase", "Purchase"])
+plt.tight_layout()
+plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\duration_analysis.png")
+plt.show()
+
+
+# Step 28: Month-wise purchase rate
+print("\nOBJECTIVE 4: MONTH-WISE PURCHASE ANALYSIS")
+
+month_purchase = df_clean.groupby("Month")["Revenue"].mean() * 100
+
+month_order = ["Feb", "Mar", "May", "June", "Jul","Aug", "Sep", "Oct", "Nov", "Dec"]
+
+month_purchase = month_purchase.reindex([month for month in month_order if month in month_purchase.index])
+print("\nMonth-wise purchase rate (%):")
+print(month_purchase)
+
+month_purchase.to_csv(r"E:\Online-Shoppers-ML-Project\output\results\month_purchase_rate.csv")
+
+plt.figure(figsize=(10, 5))
+plt.plot(month_purchase.index, month_purchase.values, color="#F59E0B", marker="o", markersize=7, linewidth=2)
+plt.title("Monthly Purchase Rate Trend")
+plt.xlabel("Month")
+plt.ylabel("Purchase Rate (%)")
+plt.grid(True, linestyle="--", alpha=0.4)
+plt.tight_layout()
+plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\month_purchase_rate.png")
+plt.show()
+
+# Step 29: Weekend purchase analysis
+print("\nOBJECTIVE 5: WEEKEND PURCHASE ANALYSIS")
+
+weekend_purchase = df_clean.groupby("Weekend")["Revenue"].mean() * 100
+print("\nPurchase rate by weekend (%):")
+print(weekend_purchase)
+
+weekend_purchase.to_csv(r"E:\Online-Shoppers-ML-Project\output\results\weekend_purchase_rate.csv")
+weekend_labels = weekend_purchase.rename(index={False: "Weekday", True: "Weekend"})
+
+plt.figure(figsize=(7, 5))
+ax = sns.barplot(x=weekend_labels.index,y=weekend_labels.values,palette=["#EC4899", "#BE185D"],hue=weekend_labels.index,legend=False)
+plt.title("Purchase Rate: Weekday vs Weekend")
+plt.xlabel("Day Type")
+plt.ylabel("Purchase Rate (%)")
+plt.tight_layout()
+plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\weekend_purchase_rate.png")
+plt.show()
+
+# Step 30: Special day purchase analysis
+print("\nOBJECTIVE 6: SPECIAL DAY ANALYSIS")
+
+specialday_purchase = df_clean.groupby("SpecialDay")["Revenue"].mean() * 100
+print("\nPurchase rate by special day value (%):")
+print(specialday_purchase)
+
+specialday_purchase.to_csv(r"E:\Online-Shoppers-ML-Project\output\results\specialday_purchase_rate.csv")
+
+plt.figure(figsize=(8, 5))
+plt.plot(specialday_purchase.index, specialday_purchase.values, marker="o", color="purple")
+plt.title("Purchase Rate by Special Day Value")
+plt.xlabel("Special Day Value")
+plt.ylabel("Purchase Rate (%)")
+plt.grid(True, alpha=0.3)
+plt.tight_layout()
+plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\specialday_purchase_rate.png")
+plt.show()
+
+# Step 31: Final EDA summary
+print("\n========== DAY 3 SUMMARY ==========")
+print("Total cleaned records:", len(df_clean))
+print("Total visualizations created: 6")
+print("Charts saved in output/figures/")
+print("Analysis tables saved in output/results/")
+print("\nDay 3 EDA completed successfully.")
