@@ -1,0 +1,3 @@
+Dataset,Rows,Purchase,Non_Purchase
+Training,9864,1497,8367
+Testing,2466,411,2055
