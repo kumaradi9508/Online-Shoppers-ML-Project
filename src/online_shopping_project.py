@@ -259,7 +259,11 @@ print("Analysis tables saved in output/results/")
 print("\nDay 3 EDA completed successfully.")
 
 # DAY 4: FEATURE ENGINEERING AND DATA PREPARATION
-# Step 32: Separate features and target
+# Step 32: Load Cleaned Dataset
+df = pd.read_csv(r"E:\Online-Shoppers-ML-Project\data\online_shoppers_intention_cleaned.csv")
+print("Dataset Shape:", df.shape)
+
+# Step 33: Separate features and target
 X = df.drop("Revenue", axis=1)
 y = df["Revenue"]
 
@@ -268,19 +272,19 @@ print("Target Shape:", y.shape)
 print("Target Values:")
 print(y.value_counts())
 
-# Step 33: Encode categorical columns
+# Step 34: Encode categorical columns
 X = pd.get_dummies(X, drop_first=True, dtype=int)
 print("Shape After Encoding:", X.shape)
 print(X.head())
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42, stratify=y)
 print("Training Data Shape:", X_train.shape)
 print("Testing Data Shape:", X_test.shape)
 print("Training Target Shape:", y_train.shape)
 print("Testing Target Shape:", y_test.shape)
 
-# Step 34: Standard Scaling for Logistic Regression
+# Step 35: Standard Scaling for Logistic Regression
 from sklearn.preprocessing import StandardScaler
 
 scaler = StandardScaler()
@@ -290,7 +294,7 @@ X_test_standard = scaler.transform(X_test)
 print("Standard Scaled Training Shape:", X_train_standard.shape)
 print("Standard Scaled Testing Shape:", X_test_standard.shape)
 
-# Step 35: Min-Max Scaling for KNN
+# Step 36: Min-Max Scaling for KNN
 from sklearn.preprocessing import MinMaxScaler
 
 minmax = MinMaxScaler()
@@ -300,7 +304,7 @@ X_test_minmax = minmax.transform(X_test)
 print("Min-Max Training Shape:", X_train_minmax.shape)
 print("Min-Max Testing Shape:", X_test_minmax.shape)
 
-# Step 36: Save Training and Testing Summary
+# Step 37: Save Training and Testing Summary
 split_summary = pd.DataFrame({"Dataset": ["Training", "Testing"],"Rows": [len(X_train), len(X_test)],"Purchase": [y_train.sum(), y_test.sum()],"Non_Purchase": [(y_train == 0).sum(), (y_test == 0).sum()]})
 split_summary.to_csv(r"E:\Online-Shoppers-ML-Project\output\results\day4_split_summary.csv",index=False)
 print(split_summary)
