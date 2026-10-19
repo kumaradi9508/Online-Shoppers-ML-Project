@@ -309,3 +309,98 @@ split_summary = pd.DataFrame({"Dataset": ["Training", "Testing"],"Rows": [len(X_
 split_summary.to_csv(r"E:\Online-Shoppers-ML-Project\output\results\day4_split_summary.csv",index=False)
 print(split_summary)
 print("Day 4 Preprocessing Completed Successfully")
+
+# Day 5: Implemented Machine Learning Models
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayes import GaussianNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import confusion_matrix, accuracy_score, classification_report
+
+# Step 38: Logistic Regression Model
+model = LogisticRegression(max_iter=1000, random_state=42)
+model.fit(X_train_standard, y_train)
+y_pred_model = model.predict(X_test_standard)
+
+print("\n========== LOGISTIC REGRESSION ==========")
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred_model))
+print("\nAccuracy:", accuracy_score(y_test, y_pred_model))
+print("\nClassification Report:\n", classification_report(y_test, y_pred_model))
+
+plt.figure(figsize=(6, 4))
+sns.heatmap(confusion_matrix(y_test, y_pred_model),annot=True, fmt="d", cmap="Blues", xticklabels=["Not Purchased", "Purchased"], yticklabels=["Not Purchased", "Purchased"])
+plt.title("Logistic Regression - Confusion Matrix")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.tight_layout()
+plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\logistic_regression_cm.png")
+plt.show()
+
+# Step 39: Gaussian Naive Bayes Model
+model = GaussianNB()
+model.fit(X_train, y_train)
+y_pred_nb = model.predict(X_test)
+
+print("\n========== NAIVE BAYES ==========")
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred_nb))
+print("\nAccuracy:", accuracy_score(y_test, y_pred_nb))
+print("\nClassification Report:\n", classification_report(y_test, y_pred_nb))
+
+plt.figure(figsize=(6, 4))
+sns.heatmap(confusion_matrix(y_test, y_pred_nb), annot=True, fmt="d", cmap="Greens", xticklabels=["Not Purchased", "Purchased"], yticklabels=["Not Purchased", "Purchased"])
+plt.title("Gaussian Naive Bayes - Confusion Matrix")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.tight_layout()
+plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\naive_bayes_cm.png")
+plt.show()
+
+# Step 40: K-Nearest Neighbour Model
+knn = KNeighborsClassifier(n_neighbors=5, metric="euclidean")
+knn.fit(X_train_minmax, y_train)
+y_pred_knn = knn.predict(X_test_minmax)
+
+print("\n========== KNN ==========")
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred_knn))
+print("\nAccuracy:", accuracy_score(y_test, y_pred_knn))
+print("\nClassification Report:\n", classification_report(y_test, y_pred_knn))
+
+plt.figure(figsize=(6, 4))
+sns.heatmap(confusion_matrix(y_test, y_pred_knn), annot=True, fmt="d", cmap="Oranges", xticklabels=["Not Purchased", "Purchased"], yticklabels=["Not Purchased", "Purchased"])
+plt.title("KNN - Confusion Matrix")
+plt.xlabel("Predicted")
+plt.ylabel("Actual")
+plt.tight_layout()
+plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\knn_cm.png")
+plt.show()
+
+# Step 41: Decision Tree Model
+classifier = DecisionTreeClassifier(criterion="entropy", random_state=42)
+classifier.fit(X_train, y_train)
+y_pred_dt = classifier.predict(X_test)
+
+print("\n========== DECISION TREE ==========")
+print("\nConfusion Matrix:\n", confusion_matrix(y_test, y_pred_dt))
+print("\nAccuracy:", accuracy_score(y_test, y_pred_dt))
+print("\nClassification Report:\n", classification_report(y_test, y_pred_dt))
+
+#For plot the Decision-Tree Diagram
+from sklearn.tree import plot_tree
+
+plt.figure(figsize=(24, 12))
+plot_tree(classifier, filled=True, feature_names=X.columns, class_names=["Not Purchased", "Purchased"], rounded=True, max_depth=2, fontsize=10)
+plt.title("Decision Tree Diagram", fontsize=18)
+plt.tight_layout()
+plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\decision_tree.png", dpi=300,bbox_inches="tight")
+plt.show()
+
+# Step 42: Day 5 Final Summary
+print("\n========================================")
+print("Day 5 Machine Learning Completed Successfully")
+print("Models Implemented:")
+print("1. Logistic Regression")
+print("2. Gaussian Naive Bayes")
+print("3. K-Nearest Neighbors (KNN)")
+print("4. Decision Tree")
+print("Evaluation: Confusion Matrix, Accuracy, Precision, Recall, F1-Score")
+print("========================================")
