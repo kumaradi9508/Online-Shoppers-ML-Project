@@ -395,7 +395,6 @@ plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\decision_tree.png", d
 plt.show()
 
 # Step 42: Day 5 Final Summary
-print("\n========================================")
 print("Day 5 Machine Learning Completed Successfully")
 print("Models Implemented:")
 print("1. Logistic Regression")
@@ -403,4 +402,32 @@ print("2. Gaussian Naive Bayes")
 print("3. K-Nearest Neighbors (KNN)")
 print("4. Decision Tree")
 print("Evaluation: Confusion Matrix, Accuracy, Precision, Recall, F1-Score")
-print("========================================")
+
+# Day 6: Comparing all the Models and checking which is best
+# Step 43: Model Comparison
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+model_comparison = pd.DataFrame({"Model": ["Logistic Regression","Gaussian Naive Bayes","KNN","Decision Tree"],
+                                 "Accuracy": [accuracy_score(y_test, y_pred_model),accuracy_score(y_test, y_pred_nb),accuracy_score(y_test, y_pred_knn),accuracy_score(y_test, y_pred_dt)],
+                                 "Precision": [precision_score(y_test, y_pred_model, pos_label=True),precision_score(y_test, y_pred_nb, pos_label=True),precision_score(y_test, y_pred_knn, pos_label=True),precision_score(y_test, y_pred_dt, pos_label=True)],
+                                 "Recall": [recall_score(y_test, y_pred_model, pos_label=True),recall_score(y_test, y_pred_nb, pos_label=True),recall_score(y_test, y_pred_knn, pos_label=True),recall_score(y_test, y_pred_dt, pos_label=True)],
+                                 "F1_Score": [f1_score(y_test, y_pred_model, pos_label=True),f1_score(y_test, y_pred_nb, pos_label=True),f1_score(y_test, y_pred_knn, pos_label=True),f1_score(y_test, y_pred_dt, pos_label=True)]
+})
+
+print("\n========== MODEL COMPARISON ==========")
+print(model_comparison.round(4))
+model_comparison.to_csv(r"E:\Online-Shoppers-ML-Project\output\results\model_comparison.csv",index=False)
+print("\nModel comparison saved successfully.")
+
+
+# Step 44: Model Comparison Graph
+plt.figure(figsize=(10, 6))
+plt.bar(model_comparison["Model"],model_comparison["Accuracy"])
+plt.title("Accuracy Comparison of Machine Learning Models")
+plt.xlabel("Machine Learning Model")
+plt.ylabel("Accuracy")
+plt.ylim(0, 1)
+plt.xticks(rotation=20)
+plt.tight_layout()
+plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\model_accuracy_comparison.png",dpi=300,bbox_inches="tight")
+plt.show()
+print("Model comparison graph saved successfully.")
