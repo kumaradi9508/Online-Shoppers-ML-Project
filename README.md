@@ -8,6 +8,7 @@
 [![Scikit-Learn](https://img.shields.io/badge/scikit--learn-F7931E.svg?logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![Pandas](https://img.shields.io/badge/pandas-150458.svg?logo=pandas&logoColor=white)](https://pandas.pydata.org/)
 [![NumPy](https://img.shields.io/badge/numpy-013243.svg?logo=numpy&logoColor=white)](https://numpy.org/)
+[![Project Report](https://img.shields.io/badge/Project_Report-PDF-red.svg?logo=adobe-acrobat-reader&logoColor=white)](report/Online_Shoppers_Purchasing_Intention_Report.pdf)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Repo Size](https://img.shields.io/github/repo-size/kumaradi9508/Online-Shoppers-ML-Project.svg)](https://github.com/kumaradi9508/Online-Shoppers-ML-Project)
 
@@ -18,6 +19,7 @@
   <a href="#-exploratory-data-analysis-eda">Key Insights & EDA</a> •
   <a href="#-machine-learning-models">Models & Results</a> •
   <a href="#-business-implications">Business Impact</a> •
+  <a href="report/Online_Shoppers_Purchasing_Intention_Report.pdf"><b>📄 Project Report (PDF)</b></a> •
   <a href="#-installation--usage">Quickstart</a>
 </p>
 
@@ -248,7 +250,8 @@ Online-Shoppers-ML-Project/
 │       ├── specialday_purchase_rate.csv
 │       ├── visitor_purchase_rate.csv
 │       └── weekend_purchase_rate.csv
-├── report/                                      # Research & project report artifacts
+├── report/                                      # Academic & technical project report
+│   └── Online_Shoppers_Purchasing_Intention_Report.pdf  # Comprehensive 47-page technical research report
 ├── screenshot/                                  # Application / notebook previews
 ├── src/
 │   └── online_shopping_project.py               # Complete end-to-end Python script
