@@ -421,7 +421,8 @@ print("\nModel comparison saved successfully.")
 
 # Step 44: Model Comparison Graph
 plt.figure(figsize=(10, 6))
-plt.bar(model_comparison["Model"],model_comparison["Accuracy"])
+colors = ["#7895B2", "#A7B7C7", "#8FA99B", "#C4B7A6"]
+plt.bar(model_comparison["Model"],model_comparison["Accuracy"],color=colors)
 plt.title("Accuracy Comparison of Machine Learning Models")
 plt.xlabel("Machine Learning Model")
 plt.ylabel("Accuracy")
@@ -431,3 +432,4 @@ plt.tight_layout()
 plt.savefig(r"E:\Online-Shoppers-ML-Project\output\figures\model_accuracy_comparison.png",dpi=300,bbox_inches="tight")
 plt.show()
 print("Model comparison graph saved successfully.")
+
