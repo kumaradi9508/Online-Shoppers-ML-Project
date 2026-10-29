@@ -252,7 +252,7 @@ Online-Shoppers-ML-Project/
 │       └── weekend_purchase_rate.csv
 ├── report/                                      # Academic & technical project report
 │   └── Online_Shoppers_Purchasing_Intention_Report.pdf  # Comprehensive 47-page technical research report
-├── screenshot/                                  # Application / notebook previews
+├── screenshot/                                  # Pipeline execution, terminal outputs & code verification (14 screenshots)
 ├── src/
 │   └── online_shopping_project.py               # Complete end-to-end Python script
 ├── .gitignore                                   # Standard Python gitignore
